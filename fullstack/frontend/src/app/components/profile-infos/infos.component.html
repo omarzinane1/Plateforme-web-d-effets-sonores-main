@@ -1,0 +1,55 @@
+<div class="main-content">
+  <h2>Profile</h2>
+  <div class="container">
+    <div class="profile-container">
+      <div class="profile-section">
+        <div class="profile-pic">
+          <img
+            *ngIf="userData"
+            [src]="userData.image_path"
+            alt="Profile Picture"
+          />
+        </div>
+
+        <div class="profile-details">
+          <!-- Connected id -->
+          <h3 *ngIf="userData">
+            {{ userData.name }}
+            {{ loggedInUserId == userData.id ? "(moi)" : "" }}
+          </h3>
+          <p *ngIf="userData">{{ userData.country }}, {{ userData.city }}</p>
+          <p *ngIf="userData">Date d'inscription: {{ userData.join_date }}</p>
+
+          <button
+            *ngIf="userData && loggedInUserId !== userData.id && isFollow"
+            class="follow-button"
+            (click)="unfollowUser(); $event.stopPropagation()"
+          >
+            Pas suivre
+          </button>
+
+          <button
+            *ngIf="userData && loggedInUserId !== userData.id && !isFollow"
+            class="follow-button"
+            (click)="followUser(); $event.stopPropagation()"
+          >
+            Suivre
+          </button>
+        </div>
+      </div>
+
+      <div class="profile-buttons-container">
+        <div *ngFor="let button of profileButtons" class="profile-column">
+          <div class="profile-button">
+            <i [class]="button.iconClass"></i>
+            {{ button.count }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bio-container">
+      <h3>Bio</h3>
+      <p *ngIf="userData">{{ userData.bio }}</p>
+    </div>
+  </div>
+</div>

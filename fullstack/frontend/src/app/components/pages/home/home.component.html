@@ -1,0 +1,66 @@
+<div class="main-content">
+  <h2 *ngIf="loggedInUserId">
+    Bienvenue, {{ getUserById(loggedInUserId)?.name }}
+  </h2>
+
+  <div class="container">
+    <div class="pub-container">
+      <img src="assets/images/def/feed-pub.png" alt="meow-it publication" />
+    </div>
+
+    <div class="cate-container">
+      <div class="title-container">
+        <h3>Catégories</h3>
+      </div>
+      <ul class="vertical-list">
+        <li
+          *ngFor="let category of categories"
+          [routerLink]="['/category', category.id]"
+          class="vertical-list-item"
+          [class.left-side]="category.side === 'left'"
+          [class.right-side]="category.side === 'right'"
+        >
+          <i [class]="category.icon"></i>
+          <span>{{ category.name }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Users card -->
+<div class="main-content">
+  <div class="container">
+    <h3>Artistes</h3>
+
+    <div class="nothing-found" *ngIf="users && users.length === 0">
+      <span>Oops! La liste est vide.</span>
+    </div>
+
+    <div class="cards-container" *ngIf="users && users.length > 0">
+      <app-user-card
+        *ngFor="let user of users"
+        [userData]="user"
+      ></app-user-card>
+    </div>
+  </div>
+</div>
+
+<!-- Tracks cards -->
+<div class="main-content">
+  <div class="container">
+    <h3>Sons</h3>
+
+    <div *ngIf="tracks && tracks.length === 0" class="nothing-found">
+      <span>Oops! La liste est vide.</span>
+    </div>
+
+    <div class="cards-container">
+      <app-track-card
+        *ngFor="let track of tracks"
+        [trackData]="track"
+        [user]="getUserById(track.user_id)"
+      ></app-track-card>
+    </div>
+  </div>
+</div>

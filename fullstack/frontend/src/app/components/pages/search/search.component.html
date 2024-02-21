@@ -1,0 +1,80 @@
+<div class="main-content">
+  <h2>Recherche</h2>
+  <div class="search-container">
+    <div class="searchbar-container">
+      <button class="search-icon" (click)="performSearch()">
+        <i class="fas fa-search"></i>
+      </button>
+      <input
+        [(ngModel)]="searchQuery"
+        type="text"
+        class="search-input"
+        placeholder="Recherche"
+      />
+      <div class="search-filter">
+        <div class="filter-list">
+          <select [(ngModel)]="searchFilter">
+            <option value="all">Toute</option>
+            <option value="sounds">Sons</option>
+            <option value="users">Artistes</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users card -->
+  <div
+    class="main-content"
+    *ngIf="searchFilter === 'all' || searchFilter === 'users'"
+  >
+    <div class="container">
+      <h3>Artistes</h3>
+
+      <div
+        class="cards-container"
+        *ngIf="filteredUsers && filteredUsers.length > 0"
+      >
+        <app-user-card
+          *ngFor="let user of filteredUsers"
+          [userData]="user"
+        ></app-user-card>
+      </div>
+
+      <div
+        class="nothing-found"
+        *ngIf="filteredUsers && filteredUsers.length == 0"
+      >
+        <span>Oops! Rien n'a été trouvé.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tracks cards -->
+  <div
+    class="main-content"
+    *ngIf="searchFilter === 'all' || searchFilter === 'sounds'"
+  >
+    <div class="container">
+      <h3>Sons</h3>
+
+      <div
+        class="cards-container"
+        *ngIf="filteredTracks && filteredTracks.length > 0"
+      >
+        <app-track-card
+          *ngFor="let track of filteredTracks"
+          [trackData]="track"
+          [user]="getUserById(track.user_id)"
+        ></app-track-card>
+      </div>
+
+      <div
+        class="nothing-found"
+        *ngIf="filteredTracks && filteredTracks.length == 0"
+      >
+        <span>Oops! Rien n'a été trouvé.</span>
+      </div>
+    </div>
+  </div>
+</div>

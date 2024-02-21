@@ -1,0 +1,24 @@
+<div [routerLink]="['/profile', userData.id]" class="user-card">
+  <img [src]="userData.image_path" alt="User Image" />
+  <p>{{ userData.name }}</p>
+
+  <button *ngIf="loggedInUserId == userData.id" class="follow-button">
+    Visite
+  </button>
+
+  <button
+    *ngIf="loggedInUserId !== userData.id && isFollow"
+    class="follow-button"
+    (click)="unfollowUser(); $event.stopPropagation()"
+  >
+    Pas suivre
+  </button>
+
+  <button
+    *ngIf="loggedInUserId !== userData.id && !isFollow"
+    class="follow-button"
+    (click)="followUser(); $event.stopPropagation()"
+  >
+    Suivre
+  </button>
+</div>

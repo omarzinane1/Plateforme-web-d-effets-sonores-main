@@ -1,0 +1,66 @@
+<div class="track-details">
+  <div class="image-container">
+    <img *ngIf="trackData" [src]="trackData.image_path" alt="Track Image" />
+  </div>
+
+  <div class="track-info">
+    <ng-container>
+      <h2 *ngIf="trackData">
+        <span>{{ trackData.title }}</span>
+        <ng-container *ngIf="LoggedUserId === trackData.user_id">
+          <div class="button-container">
+            <div class="delete-button" (click)="deleteTrack()">
+              <i class="fas fa-trash"></i>
+            </div>
+          </div>
+        </ng-container>
+      </h2>
+    </ng-container>
+
+    <p>
+      <span class="icon"><i class="fas fa-user"></i></span>
+      {{ user && user.name }}
+    </p>
+    <p>
+      <span class="icon"><i class="fas fa-clock"></i></span>
+      {{ formatTime(trackData.duration) }}
+    </p>
+    <p>
+      <span class="icon"><i class="fas fa-calendar-alt"></i></span>
+      {{ trackData.release_date }}
+    </p>
+    <p *ngIf="category">
+      <span class="icon"><i [class]="category.icon"></i></span>
+      {{ category.name }}
+    </p>
+  </div>
+
+  <div class="buttons">
+
+    <button *ngIf="!audioService.isAudioPlaying(trackData.trackURL)" class="button play-button" id="play-pause-btn" (click)="play(trackData)">
+      <i class="fas fa-play"></i>
+    </button>
+
+    <button *ngIf="audioService.isAudioPlaying(trackData.trackURL)" class="button play-button" id="play-pause-btn" (click)="pause()">
+      <i class="fas fa-pause"></i>
+    </button>
+
+    <button
+      *ngIf="hasLiked"
+      id="heart-btn"
+      [ngClass]="{ liked: hasLiked }"
+      (click)="dislikeTrack();$event.stopPropagation()"
+    >
+      <i class="fas fa-heart"></i> {{ likesCount }}
+    </button>
+
+    <button *ngIf="!hasLiked" id="heart-btn" (click)="likeTrack();$event.stopPropagation()">
+      <i class="fas fa-heart"></i> {{ likesCount }}
+    </button>
+
+
+    <button class="button download-button" (click)="download(); $event.stopPropagation()">
+      <i class="fas fa-download"></i>
+    </button>
+  </div>
+</div>

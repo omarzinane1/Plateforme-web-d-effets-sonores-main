@@ -1,0 +1,171 @@
+<div class="main-content">
+  <h2>Paramètres</h2>
+  <form
+    [formGroup]="registrationForm"
+    (ngSubmit)="saveChanges()"
+    enctype="multipart/form-data"
+  >
+    <!-- Avatar Section -->
+    <div class="container">
+      <div class="avatar-container">
+        <input
+          type="file"
+          #fileInput
+          style="display: none"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+        />
+        <img
+          *ngIf="user && user.image_path"
+          [src]="user.image_path"
+          alt="User Avatar"
+          class="avatar"
+        />
+        <div class="edit-icon" (click)="fileInput.click()">
+          <i class="fas fa-pencil-alt"></i>
+        </div>
+      </div>
+
+      <!-- Display Messages -->
+      <div
+        *ngIf="displaySuccessMessage"
+        class="error-message"
+        id="success-message"
+        [style.color]="'green'"
+      >
+        Changements sauvegardés!
+      </div>
+
+      <div *ngIf="displayErrorMessage" class="error-message" id="error-message">
+        Remplir tous les champs!
+      </div>
+
+      <div *ngIf="displayUploadFailed" class="error-message" id="error-message">
+        Mise à jour a échoué!
+      </div>
+
+      <!-- Form Sections -->
+      <div class="form-container">
+        <div class="form-section">
+          <h3>Informations personnelles</h3>
+          <div class="form-group">
+            <div class="input-with-icon">
+              <i class="fas fa-user"></i>
+              <input
+                formControlName="name"
+                type="text"
+                id="name"
+                class="form-input"
+                placeholder="Nom"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-with-icon">
+              <i class="fas fa-envelope"></i>
+              <input
+                formControlName="email"
+                type="email"
+                id="email"
+                class="form-input"
+                placeholder="E-mail"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-with-icon">
+              <i class="fas fa-globe"></i>
+              <input
+                formControlName="country"
+                type="text"
+                id="country"
+                class="form-input"
+                placeholder="Pays"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-with-icon">
+              <i class="fas fa-map-marker-alt"></i>
+              <input
+                formControlName="city"
+                type="text"
+                id="city"
+                class="form-input"
+                placeholder="Ville"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Bio</h3>
+          <div class="form-group">
+            <div class="input-with-icon">
+              <i class="fas fa-user"></i>
+              <textarea
+                formControlName="bio"
+                id="bio"
+                class="form-input"
+                placeholder="Bio"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Confidentialité</h3>
+          <div class="form-group">
+            <div class="input-with-icon">
+              <i class="fas fa-lock"></i>
+              <input
+                formControlName="password"
+                type="password"
+                id="password"
+                class="form-input"
+                placeholder="Mot de passe"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-with-icon">
+              <i class="fas fa-lock"></i>
+              <input
+                formControlName="repeatPassword"
+                type="password"
+                id="repeat-password"
+                class="form-input"
+                placeholder="Répéter le mot de passe"
+                required
+                (input)="checkPasswordMatch()"
+              />
+            </div>
+            <div *ngIf="passwordMatchError" class="password-error">
+              Les mots de passe ne correspondent pas!
+            </div>
+            <div
+              *ngIf="
+                !passwordMatchError &&
+                registrationForm.get('password')?.value &&
+                registrationForm.get('repeatPassword')?.value
+              "
+              class="password-success"
+            >
+              Les mots de passe correspondent!
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="save-button">
+        <i class="fas fa-save"></i> Sauvegarder
+      </button>
+    </div>
+  </form>
+</div>

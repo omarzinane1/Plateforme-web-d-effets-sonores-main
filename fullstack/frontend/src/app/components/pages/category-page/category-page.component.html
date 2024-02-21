@@ -1,0 +1,33 @@
+<div class="main-content">
+  <div class="main-title">
+    <div class="go-back">
+      <button (click)="navigateBack()">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+    </div>
+    <h2>
+      Catégorie: {{ category?.name }}
+      <div class="{{ category?.icon }}"></div>
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="pub-container" *ngIf="category">
+      <img src="{{ category?.imagePath }}" alt="Category Image">
+    </div>
+
+    <h3>Sons</h3>
+
+    <div *ngIf="filteredTracks.length == 0" class="nothing-found">
+      <span>Oops! Rien de trouvé dans cette catégorie.</span>
+    </div>
+
+    <div class="cards-container">
+      <app-track-card
+        *ngFor="let track of filteredTracks"
+        [trackData]="track"
+        [user]="getUserById(track.user_id)"
+      ></app-track-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,99 @@
+<div class="main-content">
+  <form
+    #uplaodForm="ngForm"
+    (ngSubmit)="onSubmit()"
+    enctype="multipart/form-data"
+  >
+    <div class="container">
+      <div class="form-container">
+        <div class="error-message" id="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <div
+          class="error-message"
+          id="success-message"
+          [style.color]="'green'"
+          *ngIf="successMessage"
+        >
+          {{ successMessage }}
+        </div>
+
+        <div class="form-section">
+          <h3>Métadonnés</h3>
+
+          <!-- Add Image Upload -->
+          <div class="form-group">
+            <label for="image">
+              <div class="input-with-icon">
+                <i class="fas fa-camera"></i>
+                <input
+                  type="file"
+                  id="image"
+                  class="form-input"
+                  name="image"
+                  accept="image/*"
+                  required
+                  (change)="onImageChange($event)"
+                />
+              </div>
+            </label>
+          </div>
+
+          <!-- Add Audio Upload -->
+          <div class="form-group">
+            <label for="audio">
+              <div class="input-with-icon">
+                <i class="fas fa-file-audio"></i>
+                <input
+                  type="file"
+                  id="audio"
+                  class="form-input"
+                  name="audio"
+                  accept="audio/mp3"
+                  required
+                  (change)="onAudioChange($event)"
+                />
+              </div>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <div class="input-with-icon">
+              <i class="fas fa-music"></i>
+              <input
+                type="text"
+                id="title"
+                class="form-input"
+                placeholder="Titre de son"
+                name="ttile"
+                [(ngModel)]="formData.title"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-with-icon">
+              <i class="fas fa-globe"></i>
+
+              <select [(ngModel)]="formData.category" name="category">
+                <option value="" disabled selected>Select a category</option>
+                <option
+                  *ngFor="let category of categories"
+                  [ngValue]="category.id"
+                >
+                  {{ category.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="save-button">
+        <i class="fas fa-upload"></i> Télécharger le son
+      </button>
+    </div>
+  </form>
+</div>

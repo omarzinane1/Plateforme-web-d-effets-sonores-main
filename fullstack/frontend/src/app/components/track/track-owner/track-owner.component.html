@@ -1,0 +1,26 @@
+<div class="artist-card" [routerLink]="['/profile', trackData.user_id]">
+  <div class="first-info" *ngIf="user">
+    <img [src]="user.image_path" alt="User Image" />
+
+    <button
+      *ngIf="user && loggedInUserId !== user.id && isFollow"
+      class="follow-button"
+      (click)="unfollowUser(); $event.stopPropagation()"
+    >
+      Pas suivre
+    </button>
+
+    <button
+      *ngIf="user && loggedInUserId !== user.id && !isFollow"
+      class="follow-button"
+      (click)="followUser(); $event.stopPropagation()"
+    >
+      Suivre
+    </button>
+  </div>
+  <div class="user-info">
+    <span>{{ followersCount }} Suiveuses</span>
+    <span>{{ followingCount }} Suivantes</span>
+    <span>{{ userlikesCount }} Aimes</span>
+  </div>
+</div>
